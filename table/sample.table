@@ -1,0 +1,29 @@
+/****************
+autogen .sql files and .go files
+*/
+
+// database name
+database TestDB;
+
+// tables
+
+struct Test {
+	int8 field1;
+	int16 field2;
+	int32 field3;
+	int64 field4;
+	int field5;
+	float field6;
+	double field7;
+	string field8;
+	varchar5 field9;
+	varchar35 field10;
+	text field11;
+};
+
+struct Shop {
+	int itemId;
+	string name;
+	int price;
+};
+
