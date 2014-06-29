@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -37,4 +38,30 @@ func FileName(path string) string {
 	prefix := reg.FindString(path)
 	path = strings.TrimPrefix(path, prefix)
 	return path
+}
+
+func GetTableFiles(path string) []string {
+	filelist := make([]string, 0)
+
+	visit := func(p string, f os.FileInfo, err error) error {
+		if f == nil {
+			return err
+		}
+		if f.IsDir() {
+			if p != path {
+				return filepath.SkipDir
+			} else {
+				return nil
+			}
+		}
+		filelist = append(filelist, p)
+		return nil
+	}
+
+	err := filepath.Walk(path, visit)
+	if err != nil {
+		fmt.Printf("filepath.Walk() error %v\n", err)
+	}
+
+	return filelist
 }

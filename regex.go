@@ -11,6 +11,7 @@ var ErrInvalidDBName = errors.New("invalid db name")
 var ErrInvalidTableName = errors.New("invalid table name")
 var ErrInvalidFieldName = errors.New("invalid field name")
 var ErrInvalidFieldType = errors.New("invalid field type")
+var ErrNoFields = errors.New("no fields")
 
 // gen data
 func gen_data(s string) (data *Sql, err error) {
@@ -34,6 +35,10 @@ func gen_data(s string) (data *Sql, err error) {
 
 		table := NewTable(table_str[0])
 		table.Fields = take_fields(&table_str[1])
+
+		if len(table.Fields) == 0 || table.Fields == nil {
+			return nil, ErrNoFields
+		}
 
 		for _, fd := range table.Fields {
 			if !check_name(fd.Name) {
@@ -92,9 +97,13 @@ func take_fields(s *string) []Field {
 	fields := make([]Field, 0)
 	for {
 		res := reg.FindStringSubmatch(*s)
-		if len(res) > 2 && check_field_type(res[1]) && check_name(res[2]) {
-			*s = strings.TrimPrefix(*s, res[0])
-			fields = append(fields, Field{res[1], res[2]})
+		if len(res) > 2 {
+			if check_field_type(res[1]) && check_name(res[2]) {
+				*s = strings.TrimPrefix(*s, res[0])
+				fields = append(fields, Field{res[1], res[2]})
+			} else {
+				return nil
+			}
 		} else {
 			break
 		}

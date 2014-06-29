@@ -9,7 +9,6 @@ import (
 func gen_sql(data *Sql, dir string) bool {
 	dir = strings.TrimSuffix(dir, "/")
 	path := dir + "/" + Lower(data.Name)
-	fmt.Printf("dest path of .sql files:%s\n", path)
 	if err := os.MkdirAll(path, 0777); err != nil {
 		fmt.Errorf("mkdir %s error:%v\n", path, err)
 		return false

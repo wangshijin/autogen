@@ -9,7 +9,7 @@ import (
 func gen_go(data *Sql, dir, model_pkg string) bool {
 	dir = strings.TrimSuffix(dir, "/")
 	path := dir + "/" + Lower(data.Name)
-	fmt.Printf("dest path of .go files:%s\n", path)
+
 	if err := os.MkdirAll(path, 0777); err != nil {
 		fmt.Errorf("mkdir %s error:%v\n", path, err)
 		return false

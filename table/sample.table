@@ -3,7 +3,7 @@ autogen .sql files and .go files
 */
 
 // database name
-database TestDB;
+database mydb;
 
 // tables
 
@@ -26,4 +26,5 @@ struct Shop {
 	string name;
 	int price;
 };
+
 

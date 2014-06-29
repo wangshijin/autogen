@@ -1,0 +1,8 @@
+database Pep;
+
+struct people {
+	int64 id;
+	string name;
+	int8 sex;
+	int16 age;
+};
